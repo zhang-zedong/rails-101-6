@@ -3,5 +3,5 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
-  scope :recent, -> {order("create_at DESC")}
+  scope :recent, -> {order("created_at DESC")}
 end
