@@ -34,6 +34,27 @@ class GroupsController < ApplicationController
     @group.destroy
     redirect_to groups_path, alert: "Destroy Group Success!"
   end
+  def join
+    @group = Group.find(params[:id])
+    if !current_user.is_member_of?(@group)
+      current_user.join!(@group)
+      flash[:notice] = "Join Success!"
+    else
+      flash[:warning]= "Have Joined"
+    end
+    redirect_to group_path(@group)
+  end
+  def quit
+    @group = Group.find(params[:id])
+    if current_user.is_member_of?(@group)
+      current_user.quit!(@group)
+      flash[:notice] = "Quit Success!"
+    else
+      flash[:warning] = "Never In!"
+    end
+    redirect_to group_path(@group)
+  end
+
 
   private
   def find_group_and_check_permission
